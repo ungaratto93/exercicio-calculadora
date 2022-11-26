@@ -6,7 +6,7 @@ public interface Calculator {
 
 	int getValueA();
 
-	char getOp();
+	Operation getOp();
 
 	int getValueB();
 

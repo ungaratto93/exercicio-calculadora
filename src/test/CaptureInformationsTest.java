@@ -30,7 +30,7 @@ public class CaptureInformationsTest {
 		calc.captureInformations();
 
 		assertEquals(2, calc.getValueA());
-		assertEquals('+', calc.getOp());
+		assertEquals("main.models.Sum", calc.getOp().getClass().getCanonicalName());
 		assertEquals(2, calc.getValueB());
 		
 	}
@@ -46,7 +46,7 @@ public class CaptureInformationsTest {
 		calc.captureInformations();
 
 		assertEquals(2, calc.getValueA());
-		assertEquals('+', calc.getOp());
+		assertEquals("main.models.Sum", calc.getOp().getClass().getCanonicalName());
 		assertEquals(2, calc.getValueB());
 		
 	}
@@ -63,7 +63,7 @@ public class CaptureInformationsTest {
 		calc.captureInformations();
 
 		assertEquals(100, calc.getValueA());
-		assertEquals('+', calc.getOp());
+		assertEquals("main.models.Sum", calc.getOp().getClass().getCanonicalName());
 		assertEquals(100, calc.getValueB());
 		
 	}

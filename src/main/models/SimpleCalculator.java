@@ -1,23 +1,36 @@
 package main.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
+import javax.security.auth.Subject;
+
 import main.interfaces.Calculator;
+import main.interfaces.Operation;
 
 public class SimpleCalculator implements Calculator {
 
 	ArrayList<Character> operations = new ArrayList<Character>(List.of('+', '-', 'x', '/'));
-
+	HashMap<Character, Operation> operation = new HashMap<Character, Operation>(
+			Map.of(
+					'+', new Sum(), 
+					'-', new Minus(), 
+					'x', new Times(), 
+					'/', new Divide()
+				)
+			);
+	
 	private int valueA;
 	private int valueB;
-	private char op;
+	private Operation op;
 
 	public SimpleCalculator() {
 	}
 
-	public SimpleCalculator(int valueA, char op, int valueB) {
+	public SimpleCalculator(int valueA, Operation op, int valueB) {
 		this.valueA = valueA;
 		this.op = op;
 		this.valueB = valueB;
@@ -37,10 +50,11 @@ public class SimpleCalculator implements Calculator {
 		}
 
 		char op = arrayOfInput[1].charAt(0);
-		if (!operations.contains(op)) {
+		if (!operation.containsKey(op)) {
 			throw new IllegalArgumentException("Operacao invalida");
 		}
-		this.op = op;
+		operation.containsKey(op);
+		this.op = operation.get(op);
 
 	}
 
@@ -65,7 +79,7 @@ public class SimpleCalculator implements Calculator {
 	}
 
 	@Override
-	public char getOp() {
+	public Operation getOp() {
 		return this.op;
 	}
 
@@ -76,26 +90,7 @@ public class SimpleCalculator implements Calculator {
 
 	@Override
 	public int calculate() {
-		int result = 0;
-		switch (this.op) {
-		case '+':
-			result = this.valueA + this.valueB;
-			break;
-		case '-':
-			result = this.valueA - this.valueB;
-			break;
-		case 'x':
-			result = this.valueA * this.valueB;
-			break;
-		case '/':
-			try {
-				result = this.valueA / this.valueB;
-				break;
-			} catch (ArithmeticException e) {
-				throw new IllegalArgumentException("division by zeo");
-			}
-		}
-		return result;
+		return this.op.calculate(this.valueA, this.valueB);
 	}
 
 	@Override
